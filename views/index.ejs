@@ -1,45 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Student Management</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <h1>Student Information System</h1>
-  <a href="/students/add">Add Student</a>
-  <hr>
+  <div class="container">
+    <header>
+      <h1>Student Management System</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/students/add">Add Student</a>
+      </nav>
+    </header>
 
-  <form action="/students/search" method="GET">
-  <input
-    type="text"
-    name="keyword"
-    placeholder="Search student..."
-  >
-  <button type="submit">Search</button>
-</form>
+    <% if (typeof deleted !== 'undefined' && deleted) { %>
+      <div class="flash flash-success">Student deleted successfully.</div>
+    <% } %>
 
-  <h2>Student List</h2>
-  <table border="1" cellpadding="10">
-    <tr>
-      <th>ID</th>
-      <th>Student ID</th>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Year</th>
-      <th>Email</th>
-    </tr>
-    <% students.forEach(student => { %>
-    <tr>
-      <td><%= student.id %></td>
-      <td><%= student.student_id %></td>
-      <td>
-        <%= student.first_name %>
-        <%= student.last_name %>
-      </td>
-      <td><%= student.course %></td>
-      <td><%= student.year_level %></td>
-      <td><%= student.email %></td>
-    </tr>
-    <% }); %>
-  </table>
+    <div class="toolbar">
+      <form action="/students/search" method="GET">
+        <input
+          type="text"
+          name="keyword"
+          placeholder="Search by ID, name, or course..."
+          value="<%= typeof keyword !== 'undefined' ? keyword : '' %>"
+        >
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+      <a href="/students/add" class="btn btn-primary">+ Add Student</a>
+    </div>
+
+    <% if (students.length === 0) { %>
+      <div class="empty-state">
+        <p>No students found.</p>
+      </div>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Course</th>
+            <th>Year</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% students.forEach(student => { %>
+            <tr>
+              <td><%= student.id %></td>
+              <td><%= student.student_id %></td>
+              <td><%= student.first_name %> <%= student.last_name %></td>
+              <td><%= student.course %></td>
+              <td><%= student.year_level %></td>
+              <td><%= student.email %></td>
+              <td>
+                <div class="actions">
+                  <form
+                    action="/students/delete/<%= student.id %>"
+                    method="POST"
+                    onsubmit="return confirm('Delete <%= student.first_name %> <%= student.last_name %>? This cannot be undone.');"
+                  >
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
 </body>
 </html>
