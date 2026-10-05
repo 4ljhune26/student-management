@@ -1,34 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Add Student</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Student — Student Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <h1>Add Student</h1>
+  <div class="container">
+    <header>
+      <h1>Add Student</h1>
+      <nav>
+        <a href="/">← Back to List</a>
+      </nav>
+    </header>
 
-  <form action="/students/add" method="POST">
-    <label>Student ID:</label><br>
-    <input type="text" name="student_id" required><br><br>
+    <form action="/students/add" method="POST" class="stacked">
+      <div class="form-group">
+        <label for="student_id">Student ID</label>
+        <input type="text" id="student_id" name="student_id" required placeholder="e.g. 2026-0004">
+      </div>
 
-    <label>First Name:</label><br>
-    <input type="text" name="first_name" required><br><br>
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" required>
+      </div>
 
-    <label>Last Name:</label><br>
-    <input type="text" name="last_name" required><br><br>
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" required>
+      </div>
 
-    <label>Course:</label><br>
-    <input type="text" name="course" required><br><br>
+      <div class="form-group">
+        <label for="course">Course</label>
+        <input type="text" id="course" name="course" required placeholder="e.g. BS Information Technology">
+      </div>
 
-    <label>Year Level:</label><br>
-    <input type="number" name="year_level" min="1" max="5" required><br><br>
+      <div class="form-group">
+        <label for="year_level">Year Level</label>
+        <input type="number" id="year_level" name="year_level" min="1" max="5" required>
+      </div>
 
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+      </div>
 
-    <button type="submit">Save Student</button>
-  </form>
-
-  <br>
-  <a href="/">Back to Student List</a>
+      <button type="submit" class="btn btn-primary">Save Student</button>
+      <a href="/" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
 </body>
 </html>
